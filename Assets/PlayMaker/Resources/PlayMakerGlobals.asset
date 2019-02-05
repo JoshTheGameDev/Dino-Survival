@@ -1,0 +1,117 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 42938266, guid: e743331561ef77147ae48cda9bcb8209, type: 3}
+  m_Name: PlayMakerGlobals
+  m_EditorClassIdentifier: 
+  variables:
+    floatVariables:
+    - useVariable: 1
+      name: Deadzone_LS
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: 0.15
+    - useVariable: 1
+      name: Deadzone_RS
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: 0.15
+    - useVariable: 1
+      name: MasterVolume
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: 0
+    intVariables:
+    - useVariable: 1
+      name: Player1
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: 0
+    boolVariables:
+    - useVariable: 1
+      name: Controller Is Being Used
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: 0
+    stringVariables:
+    - useVariable: 1
+      name: Action
+      tooltip: '''A'' or ''Enter'' Button'
+      showInInspector: 0
+      networkSync: 0
+      value: Action
+    - useVariable: 1
+      name: Back
+      tooltip: '''B'' or ''Esc'' Button'
+      showInInspector: 0
+      networkSync: 0
+      value: Back
+    - useVariable: 1
+      name: Select
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: Select
+    - useVariable: 1
+      name: Start
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: Start
+    - useVariable: 1
+      name: UICancel
+      tooltip: UI Back Button
+      showInInspector: 0
+      networkSync: 0
+      value: UICancel
+    - useVariable: 1
+      name: UISubmit
+      tooltip: UI Action Button
+      showInInspector: 0
+      networkSync: 0
+      value: UISubmit
+    vector2Variables: []
+    vector3Variables: []
+    colorVariables: []
+    rectVariables: []
+    quaternionVariables: []
+    gameObjectVariables:
+    - useVariable: 1
+      name: EventSystem_FirstSelectedObj
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: {fileID: 0}
+    objectVariables: []
+    materialVariables: []
+    textureVariables: []
+    arrayVariables: []
+    enumVariables: []
+    categories:
+    - 
+    - Rewired
+    variableCategoryIDs: 000000000000000000000000010000000000000001000000010000000100000001000000010000000100000000000000
+  events:
+  - ChangeControllerBackToNormal
+  - ChangeControllerToPauseMode
+  - LookSnap
+  - Load Main Menu
+  - Quit
+  - Options
+  - PlayPressed
+  - Do Camera Fade
+  - Controller is Enabled
+  - Controller is Disabled
