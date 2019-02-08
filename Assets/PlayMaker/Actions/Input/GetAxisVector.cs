@@ -32,7 +32,7 @@ namespace HutongGames.PlayMaker.Actions
 		[Tooltip("Make the result relative to a GameObject, typically the main camera.")]
 		public FsmGameObject relativeTo;
 		
-		//[RequiredField]
+		[RequiredField]
 		[UIHint(UIHint.Variable)]
 		[Tooltip("Store the direction vector.")]
 		public FsmVector3 storeVector;

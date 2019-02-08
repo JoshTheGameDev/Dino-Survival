@@ -1,3 +1,40 @@
+1.1.22.3:
+    
+    Changes:
+      - Changed editor code to properly handle Unity 2018.3.0+ new prefab system workflow.
+      - Added Open Prefab button to Rewired Editor when editing a prefab instance.
+      - Control Mapper: Added Input Row Padding inspector option.
+      - Control Mapper: Added Input Row Field Spacing inspector option.
+    
+    Bug Fixes:
+      - Fixed incorrect D-Pad mappings in Thrustmaster FireStorm Dual Power mapping in Gamepad Template.
+      - Fixed issue causing buttons to sometimes trigger a "false, true, false" sequence on OSX when using Sony DualShock 4 controller connected via USB, Native input, Fixed Update enabled in Rewired Input Manager update loop settings, and Enhanced Device Support enabled.
+
+1.1.22.2:
+
+    Bug Fixes:
+      - Fixed issue causing compiler errors in OSX and Linux editors when building to Windows build target. This same issue also affected Unity Cloud Build.
+      - Changed meta files on Rewired_DirectInput.dll to get around a bug in Unity 5.x where Windows libraries were attempting to be included in OSX and Linux Standalone build targets causing an exception.
+
+1.1.22.1:
+  
+    Bug Fixes:
+      - Changed importer settings on Rewired platform-specific Standalone libraries to only be included on the correct platform in Unity 2017 and Unity 2018 versions.
+
+1.1.22.0:
+
+    Changes:
+      - Added support for IL2CPP scripting backend on Windows Standalone and OSX Standalone platforms.
+      - Changed editor detection of Rewired installation folder for compatibility with moving Rewired into a Package Manager package. Note: Using Rewired as a Package Manager package is not recommended and support for issues encountered when doing so will not be provided.
+      - Modified Rewired Standalone Input Module and Touch Controls to remove checks for UnityEngine.Input.touchSupported in order to allow Unity Remote touch input to work properly when run on an editor platform that does not support touch input.
+      - Updated SimpleControlRemapping example.
+      - Updated SimpleCombinedKeyboardMouseRemapping example.
+
+    Bug Fixes:
+      - Added D-Pad mappings to Racing Wheel Template for Logitech G29.
+      - Editor: Fixed null reference exception thrown when linking Rewired Input Manager to Rewired Standalone Input Module inspector for the first time.
+      - Editor: Fixed null reference exception thrown when linking Rewired Input Manager to Player Controller inspector for the first time.
+
 1.1.21.3:
 
     Changes:

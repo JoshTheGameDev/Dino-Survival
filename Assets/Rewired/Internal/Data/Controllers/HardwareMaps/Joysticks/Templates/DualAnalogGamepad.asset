@@ -6601,11 +6601,11 @@ MonoBehaviour:
       joystickId2: 0
       splitAxis: 0
     - templateId: 21
-      joystickId: 18
+      joystickId: 19
       joystickId2: 0
       splitAxis: 0
     - templateId: 22
-      joystickId: 19
+      joystickId: 18
       joystickId2: 0
       splitAxis: 0
   specialElements:

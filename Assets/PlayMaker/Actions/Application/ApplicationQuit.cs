@@ -14,13 +14,9 @@ namespace HutongGames.PlayMaker.Actions
 
 		public override void OnEnter()
 		{
-            Application.Quit();
+			Application.Quit();
 
-            #if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
-            #endif
-
-            Finish();
+			Finish();
 		}
 	}
 }

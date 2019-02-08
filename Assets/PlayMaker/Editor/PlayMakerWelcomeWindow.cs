@@ -19,7 +19,7 @@ namespace HutongGames.PlayMakerEditor
     {
         // Remember to update version info since it's used by export scripts!
         public const string InstallCurrentVersion = "1.9.0";
-        public const string InstallAssemblyVersion = "1.9.0.p4";
+        public const string InstallAssemblyVersion = "1.9.0.p6";
         public const string InstallBetaVersion = "";
         public const string Version = InstallCurrentVersion + " " + InstallBetaVersion;
 
@@ -374,14 +374,14 @@ namespace HutongGames.PlayMakerEditor
             if (isStudentVersion)
             {
                 DrawLink(samplesIcon,
-                    "Install PlayMaker Student Version " + InstallCurrentVersion,
+                    "Install PlayMaker Student Version " + InstallAssemblyVersion,
                     "The current official release.",
                     InstallLatestStudent, null);
             }
             else
             {
                 DrawLink(samplesIcon,
-                    "Install PlayMaker " + InstallCurrentVersion,
+                    "Install PlayMaker " + InstallAssemblyVersion,
                     "The current official release.",
                     InstallLatest, null);
             }
@@ -599,7 +599,7 @@ namespace HutongGames.PlayMakerEditor
 
         private static void InstallLatest(object userData)
         {
-            if (DisplayInstallDialog(InstallCurrentVersion, "The latest release version of PlayMaker." +
+            if (DisplayInstallDialog(InstallAssemblyVersion, "The latest release version of PlayMaker." +
                                                         "\n\nNOTE: Projects saved with PlayMaker 1.8+ cannot be opened in older versions of PlayMaker!"))
             {
                 EditorStartupPrefs.ShowUpgradeGuide = true; // show upgrade guide after importing
@@ -609,7 +609,7 @@ namespace HutongGames.PlayMakerEditor
 
         private static void InstallLatestStudent(object userData)
         {
-            if (DisplayInstallDialog("Student Version " + InstallCurrentVersion, "The latest student version of PlayMaker." +
+            if (DisplayInstallDialog("Student Version " + InstallAssemblyVersion, "The latest student version of PlayMaker." +
                                                             "\n\nNOTE: The Student Version is limited to built in actions only."))
             {
                 EditorStartupPrefs.ShowUpgradeGuide = true; // show upgrade guide after importing

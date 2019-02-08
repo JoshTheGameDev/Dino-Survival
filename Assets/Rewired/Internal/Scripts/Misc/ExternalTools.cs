@@ -80,10 +80,24 @@ namespace Rewired.Utils {
     public class ExternalTools : IExternalTools {
 
         public object GetPlatformInitializer() {
+#if UNITY_5_PLUS
+#if (!UNITY_EDITOR && UNITY_STANDALONE_WIN) || UNITY_EDITOR_WIN
+            return Rewired.Utils.Platforms.Windows.Main.GetPlatformInitializer();
+#elif (!UNITY_EDITOR && UNITY_STANDALONE_OSX) || UNITY_EDITOR_OSX
+            return Rewired.Utils.Platforms.OSX.Main.GetPlatformInitializer();
+#elif (!UNITY_EDITOR && UNITY_STANDALONE_LINUX) || UNITY_EDITOR_LINUX
+            return Rewired.Utils.Platforms.Linux.Main.GetPlatformInitializer();
+#elif UNITY_WEBGL && !UNITY_EDITOR
+            return Rewired.Utils.Platforms.WebGL.Main.GetPlatformInitializer();
+#else
+            return null;
+#endif
+#else
 #if UNITY_WEBGL && !UNITY_EDITOR
             return Rewired.Utils.Platforms.WebGL.Main.GetPlatformInitializer();
 #else
             return null;
+#endif
 #endif
         }
 

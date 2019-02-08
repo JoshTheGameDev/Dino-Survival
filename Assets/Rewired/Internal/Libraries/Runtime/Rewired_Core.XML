@@ -18532,9 +18532,6 @@
         <member name="T:Rewired.InputSources.SDL2.SDL.SDL_TextEditingEvent">
             \brief Keyboard text editing event structure (event.edit.*)
         </member>
-        <member name="T:Rewired.InputSources.SDL2.SDL.SDL_TextInputEvent">
-            \brief Keyboard text input event structure (event.text.*)
-        </member>
         <member name="T:Rewired.InputSources.SDL2.SDL.SDL_MouseMotionEvent">
             \brief Mouse motion event structure (event.motion.*)
         </member>
@@ -20451,6 +20448,27 @@
             <param name="bufferLength">The length of the buffer in bytes.</param>
             <param name="numBytesToWrite">Number of bytes to write to the buffer.</param>
             <returns>Number of bytes written</returns>
+        </member>
+        <member name="T:Rewired.Utils.Classes.Utility.ObjectInstanceTracker">
+            <summary>
+            Stores instances and assigns unique ids.
+            This is used for static function pointer callback handling due to IL2CPP's inability to marshal a function pointer to an instance method.
+            Objects must be unregistered when no longer needed or you will get a MEMORY LEAK.
+            </summary>
+        </member>
+        <member name="M:Rewired.Utils.Classes.Utility.ObjectInstanceTracker.Register(System.Object)">
+            <summary>
+            Registers the object and returns a new instance id.
+            </summary>
+            <returns>New instance id.</returns>
+        </member>
+        <member name="T:Rewired.Utils.Classes.Utility.ObjectInstanceTracker.Wrapper`1">
+            <summary>
+            A wrapper for an object that registers the object with a tracker
+            and automatically unregisters it when the wrapper goes out of scope or is disposed.
+            This is so a class doesn't have to store its own id and so it can unregister properly
+            without having to implement IDisposable and be disposed manually.
+            </summary>
         </member>
         <member name="T:Rewired.Utils.Classes.Utility.SetAndRestoreVar`1">
             <summary>

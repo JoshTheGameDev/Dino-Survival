@@ -135,12 +135,12 @@
     	<div class="main-body">
 	        <div class="logo"><a href="http://guavaman.com/projects/rewired" title="Rewired"><img src="files/images/rewired-logo.png" width="173" height="139" alt="Rewired" /></a></div>
                      
-            <h1>
+          <h1>
             <!-- InstanceBeginEditable name="PageHeader" -->How To's
       <!-- InstanceEndEditable -->
             </h1>
             
-			<!-- InstanceBeginEditable name="MainBody" -->
+		  <!-- InstanceBeginEditable name="MainBody" -->
 
     <p>The following information was written under the assumption that you have already completely read and understood all documentation topics under Essentials and Concepts in the <a href="Documentation.html">Documentation</a>. If you have not done so, please do before continuing.</p>
     <p><strong>Topics:</strong></p>
@@ -562,7 +562,7 @@ void AssignJoystickToNextOpenPlayer(Joystick j) {
     <pre class="code">
 <span class="comment">// The quick way - one line of code</span>
 player.controllers.maps.SetMapsEnabled(state, categoryName);</pre>
-<p><strong>NOTE:</strong> The above SetMapsEnabled and SetAllMapsEnabled methods are not persistent flags in Player that will set a certain category of map enabled/disabled upon loading. They are simply shortcuts for the below methods that iterate the maps currently loaded in the Player and set them enabled/disabled at the time the method is called. When new Controller Maps are loaded in the Player, either manually or when a Joystick is assigned, the newly loaded maps will be enabled/disabled based on the default enabled state settings for these maps on the Player page in the Rewired Input Manager, not based on previous calls to SetMapsEnabled.</p>
+<p><strong>IMPORTANT:</strong> The above SetMapsEnabled and SetAllMapsEnabled methods are not persistent flags in Player that will set a certain category of map enabled/disabled upon loading. They are simply shortcuts for the below methods that iterate the maps currently loaded in the Player and set them enabled/disabled at the time the method is called. When new Controller Maps are loaded in the Player, either manually or when a Joystick is assigned, the newly loaded maps will be enabled/disabled based on the default enabled state settings for these maps on the Player page in the Rewired Input Manager, not based on previous calls to SetMapsEnabled. <a href="#persistent-current-controller-map-category">See this if you need to persistently set certain Map Categories enabled and others disabled</a>.</p>
 <p>You can also enable and disable maps one by one by getting the maps one by one:</p>
     <ul>
       <li><a href="http://guavaman.com/projects/rewired/docs/api-reference/html/Overload_Rewired_Player_ControllerHelper_MapHelper_GetMap.htm">player.controllers.maps.GetMap</a></li>
@@ -601,6 +601,49 @@ foreach(ControllerMap map in player.controllers.maps.GetAllMaps()) {
         }
     }
 }  </pre>
+<p><strong><a name="persistent-current-controller-map-category" id="persistent-current-controller-map-category"></a>Persistent currently enabled Controller Map Category</strong></p>
+<p>All functions to enable and disable Controller Maps act only on the Controller Maps currently existing in the Player and will not affect Controller Maps loaded after these functions are called. The Rewired Player does not contain or track a &quot;current Map Category&quot; for Controller Maps that will force certain maps to be enabled and others disabled persistently (an isssue when assigning new Controllers to a Player). Management of Controller Maps and what is and isn't loaded, enabled, or disabled at any particular time is completely up to the developer to determine. However, such functionality may be useful to maintain different control sets for different mutually-exclusive modes -- Gameplay and Menu, for example.</p>
+<p>When a Joystick is assigned to a Player, Controller Maps for that Joystick will be loaded from the pre-defined defaults set up in the Rewired Input Manager if any can be found for that particular Player based on your settings on the Player page of the Rewired Editor. If you are using different Controller Maps for different game modes, the newly-loaded Controller Maps may be loaded with the wrong Controller Maps enabled for the current game mode. (For example, you change to Menu mode, then connect a Joystick.) To handle this, you must manage what Controller Maps are enabled on a Joystick not only when changing game modes, but also when a new Joystick is connected and assigned to a Player.</p>
+<p>For example, when changing from Gameplay mode to Menu mode, you will need to set the state based on some variable in your script that tracks the current game mode. Controller Maps must be enabled/disabled to match the current state both at the moment you change game modes and when a new Joystick is connected (or more specifically, when a Joystick is assigned to a Player if you are manually assigning Joysticks). </p>
+<p>The following is just one example of how you could handle this:</p>
+<pre class="code">
+Player player;
+GameMode currentGameMode; <span class="comment">// this tracks the current game mode</span>
+
+<span class="comment">// A dictionary to look up the Map Category from the GameMode</span>
+Dictionary&lt;GameMode, string&gt; gameModeToMapCategory = new Dictionary&lt;GameMode, string&gt;() {
+     { GameMode.Gameplay, &quot;Gameplay&quot; },
+     { GameMode.Menu, &quot;Menu&quot; },
+};
+
+void Awake() {
+    <span class="comment">// Subscribe to the controller connected event so we can update
+    // Controller Maps when a new Joystick is attached</span>
+    ReInput.ControllerConnectedEvent += OnControllerConnected;
+}
+
+void OnDestroy() {
+    ReInput.ControllerConnectedEvent -= OnControllerConnected;
+}
+
+<span class="comment">// Call this when you change game modes</span>
+void ChangeGameMode(GameMode mode) {
+    currentGameMode = mode; <span class="comment">// store the new game mode</span>
+    SetControllerMapsForCurrentGameMode(); <span class="comment">// enable the correct Controller Maps for the game mode</span><br />}
+
+<span class="comment">// This is called when a Controller is connected</span>
+void OnControllerConnected(ControllerStatusChangedEventArgs args) {
+    SetControllerMapsForCurrentGameMode();<br />}
+
+<span class="comment">// Enable only the maps for the current game mode</span>
+void SetControllerMapsForCurrentGameMode() {
+    <span class="comment">// Disable all controller maps first for all controllers of all types</span>
+    player.controllers.maps.SetAllMapsEnabled(false);
+
+    <span class="comment">// Enable maps for the current game mode for all controlllers of all types</span>
+    player.controllers.maps.SetMapsEnabled(gameModeToMapCategory[currentGameMode]);
+}
+</pre>
 <p>&nbsp;</p>
     <hr />
     <h3><a name="managing-controller-maps-runtime" id="enabling-disabling-controller-maps2"></a>Managing Controller Maps at runtime</h3>
@@ -1332,9 +1375,9 @@ if(controller != null) {
 <hr />
 <h3><a name="relative-absolute-axes" id="relative-absolute-axes"></a>Handling Mouse and Joystick axes</h3>
 <ul>
-  <li>Mouse axes always return relative values (change in value since the last frame) unless the Input Behavior Mouse X/Y Axis Mode or Mouse Other Axis Mode has been set to &quot;Digital Axis&quot;. Relative axes should never be multiplied by Time.deltaTime.</li>
-  <li>Joystick and Keyboard axes always return absolute values (an absolute value from -1 to +1). Absolute axes must be multiplied by Time.deltaTime.</li>
-  <li>Custom Controller axes can return relative or absolute values depending on how you configured the axis.</li>
+  <li>Mouse axes always return Relative values (change in value since the last frame) unless the Input Behavior Mouse X/Y Axis Mode or Mouse Other Axis Mode has been set to &quot;Digital Axis&quot;. Relative axes should never be multiplied by Time.deltaTime.</li>
+  <li>Joystick and Keyboard axes always return Absolute values (an absolute value from -1 to +1). Absolute axis values must be multiplied by Time.deltaTime.</li>
+  <li>Custom Controller axes can return Relative or Absolute values depending on how you configured the axis.</li>
   </ul>
 <p><strong>Determining which type of axis is being used for an Action</strong></p>
 <p>You have your choice of how to handle this. Do one of the following:</p>
@@ -1342,7 +1385,14 @@ if(controller != null) {
   <li>Check the <a href="http://guavaman.com/projects/rewired/docs/api-reference/html/Overload_Rewired_Player_GetAxisCoordinateMode.htm">player.GetAxisCoordinateMode</a> method for the Action to determine if it's a relative or absolute axis.</li>
   <li>Check the <a href="#last-used-controller">last used controller type</a> to determine whether it's a mouse or other device type being used.</li>
   <li>Create separate Actions for Mouse axes and Joystick axes.</li>
-</ol>
+  </ol>
+<p><strong>Using the same code for Mouse and Joystick axes</strong></p>
+<p>It's possible to use the exact same code to process both Absolute and Relative axes by first processing Absolute values into Relative values. This can be done by simply multiplying the value by Time.deltaTime and a base speed constant. For example, getting all axis values through this method will result in axis values that are processed to be Relative. Then your code can just be written to expect only Relative values:</p>
+<pre class="code">public static float GetAxisRelative(this Rewired.Player player, int actionId, float absoluteToRelMult) {
+    float value = player.GetAxis(actionId);
+    if(player.GetAxisCoordinateMode(actionId) == Rewired.AxisCoordinateMode.Absolute) value *= Time.unscaledDeltaTime * absoluteToRelMult;
+    return value;
+}</pre>
 <p>&nbsp;</p>
 <hr />
     <h3><a name="calibrating-controller-axes" id="calibrating-controller-axes"></a>Calibrating Joystick axes</h3>
@@ -1717,25 +1767,25 @@ namespace Rewired.Demos {
             AssignAllJoysticksToSystemPlayer(true);
         }
 
-        void OnControllerConnected(ControllerStatusChangedEventArgs args) {
+         void OnControllerConnected(ControllerStatusChangedEventArgs args) {
             if(args.controllerType != ControllerType.Joystick) return;
 
             <span class="comment">// Check if this Joystick has already been assigned. If so, just let Auto-Assign do its job.</span>
             if(assignedJoysticks.Contains(args.controllerId)) return;
 
             <span class="comment">// Joystick hasn't ever been assigned before. Make sure it's assigned to the System Player until it's been explicitly assigned</span>
-            ReInput.players.GetSystemPlayer().controllers.AddController&lt;Joystick&gt;(
-                ReInput.controllers.GetJoystick(args.controllerId),
+            ReInput.players.GetSystemPlayer().controllers.AddController(
+                args.controllerType,
+                args.controllerId,
                 true <span class="comment">// remove any auto-assignments that might have happened</span>
             );
         }
 
         void AssignAllJoysticksToSystemPlayer(bool removeFromOtherPlayers) {
             foreach(var j in ReInput.controllers.Joysticks) {
-                ReInput.players.GetSystemPlayer().controllers.AddController<Joystick>(j.id, removeFromOtherPlayers);
+                ReInput.players.GetSystemPlayer().controllers.AddController(j, removeFromOtherPlayers);
             }
         }
-
         void Update() {
 
             <span class="comment">// Watch for JoinGame action in System Player</span>

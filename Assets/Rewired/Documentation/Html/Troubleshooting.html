@@ -162,6 +162,8 @@
       <li><a href="#digital-axis-smoothing">When a keyboard key or D-Pad is pressed, GetAxis value ramps up/down slowly instead instantly returning 1/-1</a></li>
       <li><a href="#rewired-standalone-input-module-issues">RewiredStandaloneInputModue issues</a></li>
       <li><a href="#high-cpu-usage-deep-profile">High CPU usage in profiler when using Deep Profile</a></li>
+      
+      <li><a href="#unity-alpha-beta-preview-experimental">Alpha, beta versions of Unity, experimental/preview features of Unity are not supported</a></li>
       </ul>
     <h3><a href="#unity-editor">Unity Editor:</a></h3>
     <ul>
@@ -549,12 +551,18 @@ things. All of this information is visible in the Debug Information tool:</p>
 <p>Deep Profile is notoriously inaccurate when dealing with deep levels of nested method calls because it uses reflection to get method names and such. Profile your game with Deep Profile disabled and you will see a massive increase in speed.</p>
 <p>&nbsp;</p>
 <hr />
+<h3><a name="unity-alpha-beta-preview-experimental" id="unity-alpha-beta-preview-experimental"></a>Alpha, beta versions of Unity, experimental/preview features of Unity are not supported</h3>
+<p>Rewired does not support any alpha or beta versions of Unity or any experimental or preview features in any version of Unity. Rewired may or may not work with these versions and/or features enabled and no explicit support for them will be added.</p>
+<p>Every major release of Unity requires a branch of Rewired built specifically for that branch. When a new major version of Unity is in alpha or beta state, there will be no version of Rewired available for this major version of Unity. Once the final version is released by Unity, a new branch of Rewired will be released for download on the Unity Asset Store.</p>
+<p>Guavaman Enterprises does not provide support for pre-release versions of Unity or unfinalized features.</p>
+<p>&nbsp;</p>
+<hr />
 <p>&nbsp;</p>
 <h2><a name="unity-editor" id="unity-editor"></a>Unity Editor</h2>
 <p>&nbsp;</p>
 <h3><a name="wrong-rewired-version-installed" id="wrong-rewired-version-installed"></a>Error: The version of Rewired installed  was not designed for Unity X. Please install Rewired for Unity X.</h3>
 <p>The error indicates you have installed a version of Rewired incompatible with the version of Unity you are using. You must install the correct version of Rewired from the Unity Asset Store.</p>
-<p>The Unity Asset Store will automatically download you the correct branch for the version of Unity you are using when downloading an asset. However, it does have bugs. If you have downloaded Rewired in an older version of the editor, the old version of the file will be cached in the Asset Store download location. The exact same download location is used for all versions of Unity from 5.x onward, so it may attempt to install a copy of Rewired which was downloaded for an older version of Unity when you try installing it from the Asset Store. The only solution is to delete the cached download and re-download it. <a href="https://docs.unity3d.com/Manual/AssetStore.html" target="_blank">See the Unity Manual</a> for location of the Asset Store files.</p>
+<p>The Unity Asset Store will automatically download the correct branch for the version of Unity you are using when downloading an asset. However, it does have bugs. If you have downloaded Rewired in a newer or older major version of the Unity editor, that version of the file will be cached in the Asset Store download location. The exact same download location is used for all versions of Unity from 5.0 onward, so when you switch to a different major version of Unity, the Unity Asset Store installer will install a copy of Rewired which was downloaded for a different version of Unity. The only solution is to delete the cached download and re-download it in Unity editor. <a href="https://docs.unity3d.com/Manual/AssetStore.html" target="_blank">See the Unity Manual</a> for location of the Asset Store files.</p>
 <p>&nbsp;</p>
 <hr />
 <h3><a name="installation-problems-and-compiler-errors" id="installation-problems-and-compiler-errors"></a>Rewired does not install or has compiler errors immediately after installation</h3>
