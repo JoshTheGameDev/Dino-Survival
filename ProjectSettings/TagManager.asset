@@ -8,6 +8,8 @@ TagManager:
   - Button/Quit/Yes
   - Button/Options/FirstSelected
   - Button/MainMenu/Play
+  - Camera/VCam
+  - Camera/CameraChangeTrigger
   layers:
   - Default
   - TransparentFX
